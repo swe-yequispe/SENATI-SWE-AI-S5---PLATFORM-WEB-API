@@ -32,7 +32,7 @@ export const ProductCard = ({
   return (
     <Card
       as="article"
-      className="group overflow-hidden border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+      className="group flex h-full min-h-[420px] flex-col overflow-hidden border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
     >
       <Link to={`/products/${product.id}`} className="block">
         <div className="relative">
@@ -62,11 +62,14 @@ export const ProductCard = ({
         </div>
       </Link>
 
-      <div className="space-y-3 p-4">
+      <div className="flex h-full flex-col space-y-3 p-4">
         <div className="flex items-start justify-between gap-2">
-          <div>
+          <div className="min-h-[64px]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">SKU {product.sku}</p>
-            <Link to={`/products/${product.id}`} className="text-base font-semibold text-slate-900 hover:text-blue-700">
+            <Link
+              to={`/products/${product.id}`}
+              className="block max-h-[48px] overflow-hidden text-base font-semibold text-slate-900 hover:text-blue-700"
+            >
               {product.name}
             </Link>
           </div>
@@ -75,9 +78,9 @@ export const ProductCard = ({
           </span>
         </div>
 
-        <p className="text-sm text-slate-600">{product.description}</p>
+        <p className="min-h-[40px] max-h-[40px] overflow-hidden text-sm text-slate-600">{product.description}</p>
 
-        <div className="flex items-center justify-between gap-2">
+        <div className="mt-auto flex items-center justify-between gap-2">
           <p className="text-lg font-bold text-slate-900">{formatCurrency(product.price)}</p>
           <div className="flex items-center gap-2">
             <Link

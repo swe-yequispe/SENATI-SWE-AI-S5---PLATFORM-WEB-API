@@ -22,8 +22,12 @@ const AppLayout = (): JSX.Element => {
         <section className="mx-auto w-full max-w-7xl space-y-5">
           <div className="announcement-bar">
             <div className="announcement-track">
-              <span>Envio gratis desde S/ 250 | Garantia local | Soporte para equipos de tecnologia</span>
-              <span>Envio gratis desde S/ 250 | Garantia local | Soporte para equipos de tecnologia</span>
+              <span>Envío gratis desde S/ 250</span>
+              <span>Garantía de 1 año en todos los productos</span>
+              <span>Atención al cliente 24/7</span>
+              <span>Devoluciones fáciles en 30 días</span>
+              <span>Pago seguro con múltiples opciones</span>
+              <span>Soporte técnico especializado</span>
             </div>
           </div>
 
