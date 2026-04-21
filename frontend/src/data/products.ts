@@ -3,6 +3,7 @@
 export const PRODUCTS: Product[] = [
   {
     id: "p-001",
+    sku: "p-001",
     name: "Mouse Gamer RGB Pro",
     description: "Sensor de alta precision 12000 DPI y switch silencioso.",
     category: "pc",
@@ -12,6 +13,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "p-002",
+    sku: "p-002",
     name: "Laptop Stand Aluminio",
     description: "Base ergonomica para laptops de 13 a 17 pulgadas.",
     category: "laptop",
@@ -21,6 +23,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "p-003",
+    sku: "p-003",
     name: "Cable USB-C 100W",
     description: "Carga rapida y transferencia de datos reforzada.",
     category: "celular",
@@ -30,6 +33,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "p-004",
+    sku: "p-004",
     name: "Teclado Mecanico TKL",
     description: "Switches red, iluminacion RGB y formato compacto.",
     category: "teclado",
@@ -39,6 +43,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "p-005",
+    sku: "p-005",
     name: "Audifonos Bluetooth ANC",
     description: "Cancelacion de ruido activa para llamadas y musica.",
     category: "audio",
@@ -48,6 +53,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "p-006",
+    sku: "p-006",
     name: "Power Bank 20000mAh",
     description: "Dual output USB-C y proteccion termica inteligente.",
     category: "celular",
@@ -57,6 +63,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "p-007",
+    sku: "p-007",
     name: "Hub USB-C 7 en 1",
     description: "HDMI 4K, lector SD y puertos USB 3.0 de alta velocidad.",
     category: "laptop",
@@ -66,6 +73,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "p-008",
+    sku: "p-008",
     name: "Soporte Celular MagSafe",
     description: "Montaje magnetico estable para escritorio y streaming.",
     category: "celular",
