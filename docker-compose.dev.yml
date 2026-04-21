@@ -1,0 +1,61 @@
+﻿services:
+  db:
+    image: mysql:8.0
+    container_name: techstore-db-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: senatiwebapi
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    image: node:20-alpine
+    container_name: techstore-backend-dev
+    working_dir: /workspace
+    restart: unless-stopped
+    environment:
+      PORT: 3001
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: senatiwebapi
+      DB_USER: root
+      DB_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "npm ci --workspace backend --workspace packages/shared --include-workspace-root false && npm run dev -w backend"
+    volumes:
+      - ./:/workspace
+      - backend_node_modules:/workspace/node_modules
+    ports:
+      - "3002:3001"
+
+  frontend:
+    image: node:20-alpine
+    container_name: techstore-frontend-dev
+    working_dir: /workspace
+    restart: unless-stopped
+    environment:
+      VITE_API_URL: http://localhost:3002
+    depends_on:
+      - backend
+    command: sh -c "npm ci --workspace frontend --workspace packages/shared --include-workspace-root false && npm run dev -w frontend -- --host 0.0.0.0 --port 5173"
+    volumes:
+      - ./:/workspace
+      - frontend_node_modules:/workspace/node_modules
+    ports:
+      - "5173:5173"
+
+volumes:
+  mysql_dev_data:
+  backend_node_modules:
+  frontend_node_modules:
