@@ -28,6 +28,9 @@ Aplicacion de pedidos con flujo completo:
   - Retorna lista JSON de pedidos
 
 ### Tienda virtual (MySQL real)
+- `POST /auth/admin/login`
+  - Body: `{ "username": "admin", "password": "..." }`
+  - Retorna JWT Bearer para rutas administrativas.
 - `GET /store/products`
   - Lista productos activos de la tienda.
 - `POST /store/orders`
@@ -36,9 +39,12 @@ Aplicacion de pedidos con flujo completo:
   - Crea orden en estado `pending_payment` y retorna referencia de pago.
 - `POST /store/orders/:orderId/confirm-payment`
   - Body: `{ "paymentReference": "PAY-..." }`
+  - `paymentReference` es obligatoria y debe coincidir con la orden.
   - Confirma compra y marca orden como pagada (sin verificacion externa por ahora).
 - `GET /mysql/pedidos`
   - Vista de ordenes en MySQL con items/productos.
+  - Requiere header `Authorization: Bearer <token>`.
+  - En produccion se recomienda mantener `ENABLE_ADMIN_ROUTES=false`.
 
 ## Requisitos
 - Docker Desktop (o Docker Engine + Compose plugin)
@@ -51,6 +57,10 @@ Aplicacion de pedidos con flujo completo:
 - `DB_USER` (default: `root`)
 - `DB_PASSWORD` (default: ``)
 - `CORS_ORIGIN` (lista separada por comas; ejemplo: `http://localhost:5173,https://techstore.pe`)
+- `ENABLE_ADMIN_ROUTES` (`true/false`, en produccion: `false`)
+- `ADMIN_USER` (usuario admin para login JWT)
+- `ADMIN_PASSWORD` (password admin para login JWT)
+- `ADMIN_JWT_SECRET` (secreto para firmar y validar JWT)
 
 ## Variables de entorno frontend
 - `VITE_API_URL` (default local recomendado: `http://localhost:3001`)

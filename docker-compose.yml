@@ -22,12 +22,17 @@
     container_name: techstore-backend
     restart: unless-stopped
     environment:
+      NODE_ENV: production
       PORT: 3001
       DB_HOST: db
       DB_PORT: 3306
       DB_NAME: senatiwebapi
       DB_USER: root
       DB_PASSWORD: root
+      ENABLE_ADMIN_ROUTES: ${ENABLE_ADMIN_ROUTES:-false}
+      ADMIN_USER: ${ADMIN_USER:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-change-me-admin-password}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET:-change-me-jwt-secret}
     depends_on:
       db:
         condition: service_healthy

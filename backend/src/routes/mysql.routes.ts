@@ -1,9 +1,10 @@
-﻿import { Router } from "express";
+import { Router } from "express";
 import { StoreOrder, StoreOrderItem, StoreProduct, connectMySql } from "../db/mysql.js";
+import { requireAdminAuth } from "../middleware/require-admin-auth.js";
 
 export const mysqlRouter = Router();
 
-mysqlRouter.get("/pedidos", async (_req, res, next) => {
+mysqlRouter.get("/pedidos", requireAdminAuth, async (_req, res, next) => {
   try {
     await connectMySql();
     const data = await StoreOrder.findAll({

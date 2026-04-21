@@ -1,4 +1,5 @@
-﻿import { Op } from "sequelize";
+import { Op } from "sequelize";
+import crypto from "node:crypto";
 import { HttpError } from "../types/http-error.js";
 import { StoreOrder, StoreOrderItem, StoreProduct, connectMySql, sequelize } from "../db/mysql.js";
 
@@ -88,7 +89,7 @@ export const createOrder = async (input: CreateOrderInput) => {
 
   const shipping = subtotal === 0 || subtotal >= 250 ? 0 : 15;
   const total = normalizeMoney(subtotal + shipping);
-  const paymentReference = `PAY-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+  const paymentReference = `PAY-${Date.now()}-${crypto.randomUUID()}`;
 
   const result = await sequelize.transaction(async (transaction) => {
     const order = await StoreOrder.create(
@@ -131,8 +132,12 @@ export const createOrder = async (input: CreateOrderInput) => {
   return result;
 };
 
-export const confirmOrderPayment = async (orderId: number, paymentReference?: string) => {
+export const confirmOrderPayment = async (orderId: number, paymentReference: string) => {
   await connectMySql();
+
+  if (!paymentReference.trim()) {
+    throw new HttpError(400, "La referencia de pago es obligatoria");
+  }
 
   const order = await StoreOrder.findByPk(orderId);
   if (!order) {
@@ -141,7 +146,7 @@ export const confirmOrderPayment = async (orderId: number, paymentReference?: st
 
   const currentReference = String(order.get("paymentReference"));
 
-  if (paymentReference && paymentReference !== currentReference) {
+  if (paymentReference !== currentReference) {
     throw new HttpError(400, "La referencia de pago no coincide con la orden");
   }
 
@@ -168,3 +173,4 @@ export const confirmOrderPayment = async (orderId: number, paymentReference?: st
     paidAt: order.get("paidAt"),
   };
 };
+

@@ -42,7 +42,14 @@ storeRouter.post("/orders/:orderId/confirm-payment", async (req, res, next) => {
     }
 
     const body = req.body as { paymentReference?: string };
-    const data = await confirmOrderPayment(orderId, body.paymentReference);
+    const paymentReference = String(body.paymentReference ?? "").trim();
+
+    if (!paymentReference) {
+      res.status(400).json({ message: "paymentReference es obligatoria" });
+      return;
+    }
+
+    const data = await confirmOrderPayment(orderId, paymentReference);
     res.json(data);
   } catch (error) {
     next(error);
