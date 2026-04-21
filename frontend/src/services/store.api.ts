@@ -1,4 +1,4 @@
-﻿import type {
+import type {
   ConfirmPaymentResponse,
   CreateOrderPayload,
   CreateOrderResponse,

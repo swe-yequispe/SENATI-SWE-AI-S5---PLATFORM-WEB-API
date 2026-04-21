@@ -41,9 +41,8 @@ Aplicacion de pedidos con flujo completo:
   - Vista de ordenes en MySQL con items/productos.
 
 ## Requisitos
-- Node.js 20+
-- npm 10+
-- MySQL 8+
+- Docker Desktop (o Docker Engine + Compose plugin)
+- Node.js 20+ y npm 10+ (solo para comandos npm del monorepo)
 
 ## Variables de entorno backend (MySQL)
 - `DB_HOST` (default: `localhost`)
@@ -51,22 +50,37 @@ Aplicacion de pedidos con flujo completo:
 - `DB_NAME` (default: `senatiwebapi`)
 - `DB_USER` (default: `root`)
 - `DB_PASSWORD` (default: ``)
+- `CORS_ORIGIN` (lista separada por comas; ejemplo: `http://localhost:5173,https://techstore.pe`)
+
+## Variables de entorno frontend
+- `VITE_API_URL` (default local recomendado: `http://localhost:3001`)
+
+Archivos de ejemplo:
+- `backend/.env.example`
+- `frontend/.env.example`
 
 ## Instalacion
 ```bash
 npm install
 ```
 
-## Desarrollo
+## Desarrollo (Docker, sin XAMPP)
 ```bash
 npm run dev
 ```
 - Frontend: http://localhost:5173
-- Backend: http://localhost:3001
+- Backend: http://localhost:3002
+- MySQL: contenedor Docker interno (`db`)
+
+Comando local opcional (solo si quieres correr fuera de Docker):
+```bash
+npm run dev:local
+```
 
 ## Scripts
 ```bash
-npm run dev      # frontend + backend
+npm run dev      # desarrollo con Docker (recomendado, sin XAMPP)
+npm run dev:local # frontend + backend en local (opcional)
 npm run build    # build shared + backend + frontend
 npm run test     # tests backend + frontend
 npm run docker:up
@@ -83,6 +97,7 @@ Si usas `make`, tienes atajos equivalentes:
 ```bash
 make install
 make dev
+make dev-local
 make test
 make build
 make docker-up
@@ -106,6 +121,42 @@ Detener stack:
 npm run docker:down
 ```
 
+## Despliegue en hosting (produccion)
+### Opcion 1: Docker Compose (VPS)
+1. Clona el repositorio en tu servidor.
+2. Define DNS del dominio (por ejemplo `techstore.pe`) apuntando al VPS.
+3. Ejecuta:
+```bash
+npm ci
+npm run docker:up
+```
+4. Publica el puerto `8080` o mapealo a `80/443` con proxy reverso.
+5. Configura TLS (Nginx Proxy Manager, Caddy o certbot).
+
+### Opcion 2: Frontend y backend en servicios separados
+1. Frontend estatico:
+   - Build: `npm run build -w frontend`
+   - Publicar carpeta `frontend/dist`.
+2. Backend Node:
+   - Build: `npm run build -w backend`
+   - Start: `npm run start -w backend`
+3. Define:
+   - `VITE_API_URL` en frontend con la URL publica del backend.
+   - `CORS_ORIGIN` en backend con la URL publica del frontend.
+
+## SEO tecnico incluido
+- Metadatos SEO base en `frontend/index.html`.
+- Open Graph y Twitter Cards.
+- Datos estructurados JSON-LD tipo `Store`.
+- `robots.txt`, `sitemap.xml` y `site.webmanifest` en `frontend/public`.
+
+Antes de publicar:
+1. Reemplaza `https://techstore.pe` por tu dominio real en:
+   - `frontend/index.html`
+   - `frontend/public/robots.txt`
+   - `frontend/public/sitemap.xml`
+2. Verifica indexacion en Google Search Console.
+
 ## Docker Dev (hot reload)
 Para desarrollo dentro de contenedores (Vite + tsx watch + MySQL):
 
@@ -115,7 +166,7 @@ npm run docker:dev:up
 
 Servicios dev:
 - Frontend: `http://localhost:5173`
-- Backend: `http://localhost:3001/health`
+- Backend: `http://localhost:3002/health`
 - MySQL: `localhost:3307` (`root` / `root`)
 
 Detener entorno dev:

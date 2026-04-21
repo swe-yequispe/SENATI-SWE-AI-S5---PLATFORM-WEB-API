@@ -1,9 +1,10 @@
-﻿.PHONY: help install dev test build docker-up docker-down docker-logs docker-dev-up docker-dev-down docker-dev-logs
+.PHONY: help install dev dev-local test build docker-up docker-down docker-logs docker-dev-up docker-dev-down docker-dev-logs
 
 help:
 	@echo "Targets disponibles:"
 	@echo "  install           Instala dependencias"
-	@echo "  dev               Levanta frontend+backend en local"
+	@echo "  dev               Levanta stack de desarrollo con Docker (sin XAMPP)"
+	@echo "  dev-local         Levanta frontend+backend en local (opcional)"
 	@echo "  test              Ejecuta tests de backend y frontend"
 	@echo "  build             Compila shared, backend y frontend"
 	@echo "  docker-up         Levanta stack Docker de despliegue"
@@ -18,6 +19,9 @@ install:
 
 dev:
 	npm run dev
+
+dev-local:
+	npm run dev:local
 
 test:
 	npm run test

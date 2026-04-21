@@ -1,0 +1,21 @@
+{
+  "name": "Senati Tech Solutions",
+  "short_name": "Senati Tech",
+  "description": "Tienda de tecnologia con productos para hogar, gaming y trabajo profesional.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "/senati_icon.svg.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/senati_icon.svg.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

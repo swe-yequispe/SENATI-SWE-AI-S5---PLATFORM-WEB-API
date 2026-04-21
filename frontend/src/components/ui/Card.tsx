@@ -1,4 +1,4 @@
-﻿import type { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 
 interface CardProps extends HTMLAttributes<HTMLElement> {
   as?: "article" | "section" | "div" | "li";

@@ -1,6 +1,7 @@
-﻿import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { App } from "./App";
+import { StorefrontProvider } from "./storefront/context";
 
 vi.mock("./services/store.api", () => ({
   fetchProductsApi: vi.fn(async () => [
@@ -32,16 +33,26 @@ vi.mock("./services/store.api", () => ({
 
 describe("Tienda virtual App", () => {
   it("renderiza el titulo principal", () => {
-    render(<App />);
-    expect(screen.getByText("Tienda virtual de accesorios tech")).toBeInTheDocument();
+    render(
+      <StorefrontProvider>
+        <App />
+      </StorefrontProvider>,
+    );
+
+    expect(screen.getByText("Componentes y accesorios para tu setup profesional")).toBeInTheDocument();
   });
 
   it("agrega un producto al carrito", async () => {
-    render(<App />);
+    render(
+      <StorefrontProvider>
+        <App />
+      </StorefrontProvider>,
+    );
 
-    const buttons = await screen.findAllByRole("button", { name: "Agregar al carrito" });
+    const buttons = await screen.findAllByRole("button", { name: "Agregar" });
     fireEvent.click(buttons[0]);
 
-    expect(screen.getByText("1 items en carrito")).toBeInTheDocument();
+    const cartIcons = screen.getAllByLabelText("Carrito");
+    expect(cartIcons.some((icon) => icon.textContent?.includes("1"))).toBe(true);
   });
 });

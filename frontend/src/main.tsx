@@ -1,10 +1,13 @@
-﻿import { StrictMode } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
+import { StorefrontProvider } from "./storefront/context";
 import "./styles.css";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
-    <App />
+    <StorefrontProvider>
+      <App />
+    </StorefrontProvider>
   </StrictMode>,
 );

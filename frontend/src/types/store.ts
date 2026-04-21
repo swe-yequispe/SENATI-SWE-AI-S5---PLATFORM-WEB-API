@@ -1,4 +1,4 @@
-﻿export type ProductCategory = "pc" | "laptop" | "celular" | "teclado" | "audio";
+export type ProductCategory = "pc" | "laptop" | "celular" | "tablet" | "audio" | "video" | "teclado";
 
 export interface Product {
   id: string;

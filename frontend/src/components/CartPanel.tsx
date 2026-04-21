@@ -1,4 +1,4 @@
-﻿import { Alert, Badge, Button, Card, TextInput } from "./ui";
+import { Alert, Badge, Button, Card, TextInput } from "./ui";
 import type { CartLine } from "../types/store";
 
 type CheckoutStep = "cart" | "customer" | "payment" | "success";
@@ -94,10 +94,10 @@ export const CartPanel = ({
       </div>
 
       <div className="grid grid-cols-4 gap-2 text-xs font-semibold">
-        <span className={checkoutStep === "cart" ? "text-teal-700" : "text-slate-500"}>1. Carrito</span>
-        <span className={checkoutStep === "customer" ? "text-teal-700" : "text-slate-500"}>2. Cliente</span>
-        <span className={checkoutStep === "payment" ? "text-teal-700" : "text-slate-500"}>3. Pago</span>
-        <span className={checkoutStep === "success" ? "text-teal-700" : "text-slate-500"}>4. Confirmacion</span>
+        <span className={checkoutStep === "cart" ? "text-blue-700" : "text-slate-500"}>1. Carrito</span>
+        <span className={checkoutStep === "customer" ? "text-blue-700" : "text-slate-500"}>2. Cliente</span>
+        <span className={checkoutStep === "payment" ? "text-blue-700" : "text-slate-500"}>3. Pago</span>
+        <span className={checkoutStep === "success" ? "text-blue-700" : "text-slate-500"}>4. Confirmacion</span>
       </div>
 
       {formError && <Alert variant="error">{formError}</Alert>}

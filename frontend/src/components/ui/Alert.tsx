@@ -1,4 +1,4 @@
-﻿import type { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 
 interface AlertProps extends HTMLAttributes<HTMLDivElement> {
   variant?: "error" | "info" | "success";
